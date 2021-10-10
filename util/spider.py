@@ -29,12 +29,15 @@ def spider_fans(user_id, since_id):
     data = json.loads(data)
 
     # 返回数据为空时，repeat
+    wait_time = 1
     while data['ok'] == 0:
         print("Request Failed!!!")
-        time.sleep(1)
+        time.sleep(wait_time)
         response = requests.request("GET", url, headers=headers)
         data = response.content
         data = json.loads(data)
+        if wait_time <= 800:
+            wait_time *= 5
 
     # 获取粉丝列表，当被大V关注时，cards[0]会列举大V信息
     fans_list = data['data']['cards'][-1]['card_group']
@@ -45,8 +48,8 @@ def spider_fans(user_id, since_id):
 
     for fan in fans_list:
         try:
-            # 忽略粉丝数>=1000的用户
-            if fan['user'] is not None and int(fan['user']['followers_count']) < 1000:
+            # 忽略粉丝数>500的用户
+            if fan['user'] is not None and int(fan['user']['followers_count']) <= 500:
                 try:
                     # id、昵称、性别
                     fans_info.append({'fan_id': fan['user']['id'], 'fan_name': fan['user']['screen_name'],
@@ -71,7 +74,7 @@ while search_depth <= 1:
         user_ids = temp_user_ids
         temp_user_ids = Queue()
         # 保存数据
-        with open('fans-depth{}.json'.format(search_depth), 'w') as f:
+        with open('../data/fans-depth{}.json'.format(search_depth), 'w') as f:
             json.dump(fans_info, f)
         # with open('temp_user_ids.json', 'w') as temp_f:
         #     temp_queue = copy.deepcopy(user_ids)
@@ -80,13 +83,14 @@ while search_depth <= 1:
         #         temp_ids.append(temp_queue.get())
         #     json.dump(temp_ids, temp_f)
         fans_info = []
+        print('Search Depth {} Finished'.format(search_depth))
         search_depth += 1
     else:
         user_id = user_ids.get()
         since_id = 0
         fans_list = []
         while True:
-            time.sleep(1)
+            # time.sleep(1)
             fans, end = spider_fans(user_id, since_id)
             fans_list += fans
             print(fans)
