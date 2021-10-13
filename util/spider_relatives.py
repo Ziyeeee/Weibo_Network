@@ -25,7 +25,7 @@ if __name__ == '__main__':
     cache_files = get_file_list('../data/cache/relatives')
     relatives_cache, last_relatives_data = read_json_files(cache_files)
 
-    while search_depth <= 2:
+    while search_depth <= 3:
         if user_ids.empty():
             # 本层遍历结束
             user_ids = temp_user_ids
