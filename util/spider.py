@@ -39,10 +39,10 @@ def spider_fans(user_id, since_id):
         print("Request Failed!!!\tWait {}s".format(wait_time))
         time.sleep(wait_time)
         data, success_flag = repeat_request(url)
-        if wait_time >= 150:
+        if wait_time >= 18.75:
             return [], True
-        elif wait_time <= 150:
-            wait_time *= 4
+        elif wait_time <= 18.75:
+            wait_time *= 2
 
     # 获取粉丝列表，当被大V关注时，cards[0]会列举大V信息
     fans_list = data['data']['cards'][-1]['card_group']
