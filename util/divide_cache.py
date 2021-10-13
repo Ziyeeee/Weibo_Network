@@ -1,9 +1,8 @@
 import json
-import os
 
 
 def divide_cache(item_num):
-    with open('../data/fans_user_cache.json', 'r') as f:
+    with open('../data/cache/followers/followers_user_cache.json', 'r') as f:
         data = json.load(f)
 
     cache_f_list = []
@@ -18,7 +17,7 @@ def divide_cache(item_num):
     cache_f_list.append(temp_dict)
 
     for i, temp_dict in enumerate(cache_f_list):
-        with open('../data/cache/fans_user_cache{:0>3d}.json'.format(i), 'w') as cache_f:
+        with open('../data/cache/followers_user_cache{:0>3d}.json'.format(i), 'w') as cache_f:
             json.dump(temp_dict, cache_f)
 
 
