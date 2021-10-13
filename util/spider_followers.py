@@ -83,7 +83,7 @@ user_ids.put(3479691367)
 queue_len = user_ids.qsize()
 search_depth = 0
 
-with open('../data/followers_user_cahce.json', 'r') as cache_f:
+with open('../data/followers_user_cache.json', 'r') as cache_f:
     user_cache = json.load(cache_f)
 
 while search_depth <= 5:
@@ -131,5 +131,5 @@ while search_depth <= 5:
                 visited_user_cache[user_id] = followers_list
                 followers_info.append({'user_id': user_id, 'followers_info': followers_list})
                 # 缓存已经获取到的所有用户信息
-                with open('../data/followers_user_cahce.json', 'w') as cache_f:
+                with open('../data/followers_user_cache.json', 'w') as cache_f:
                     json.dump(visited_user_cache, cache_f)

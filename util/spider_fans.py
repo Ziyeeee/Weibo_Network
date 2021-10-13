@@ -1,13 +1,34 @@
 import requests
 import json
 import time
+import os
 from queue import Queue
+from util.divide_cache import item_num
+
 
 """
     网址：https://m.weibo.cn/profile/3479691367
     待完成：
         1.爬取关注的人
 """
+
+
+def get_file_list(root_dir):
+    json_files = []
+    for root, dirs, files in os.walk(root_dir):
+        for file in files:
+            if os.path.splitext(file)[1] == '.json':
+                json_files.append(os.path.join(root, file))
+    return json_files
+
+
+def read_json_files(files):
+    data = {}
+    for file in files:
+        with open(file, 'r') as f:
+            temp_data = json.load(f)
+            data.update(temp_data)
+    return data, temp_data
 
 
 def repeat_request(url):
@@ -39,9 +60,9 @@ def spider_fans(user_id, since_id):
         print("Request Failed!!!\tWait {}s".format(wait_time))
         time.sleep(wait_time)
         data, success_flag = repeat_request(url)
-        if wait_time >= 18.75:
+        if wait_time >= 10:
             return [], True
-        elif wait_time <= 18.75:
+        else:
             wait_time *= 2
 
     # 获取粉丝列表，当被大V关注时，cards[0]会列举大V信息
@@ -65,13 +86,15 @@ def spider_fans(user_id, since_id):
 user_ids = Queue()
 temp_user_ids = Queue()
 fans_info = []
-visited_user_cache = {}
+visited_users = []
 user_ids.put(3479691367)
 queue_len = user_ids.qsize()
 search_depth = 0
 
-with open('../data/fan_user_cahce.json', 'r') as cache_f:
-    user_cache = json.load(cache_f)
+cache_files = get_file_list('../data/cache')
+user_cache, last_data = read_json_files(cache_files)
+# with open('../data/fans_user_cache.json', 'r') as cache_f:
+#     user_cache = json.load(cache_f)
 
 while search_depth <= 5:
     if user_ids.empty():
@@ -87,7 +110,7 @@ while search_depth <= 5:
         search_depth += 1
     else:
         user_id = user_ids.get()
-        if user_id in visited_user_cache.keys():
+        if user_id in visited_users:
             # 如果该用户已被访问过
             continue
         else:
@@ -96,7 +119,7 @@ while search_depth <= 5:
                 print('{}/{}:\t{} in cache'.format(queue_len - user_ids.qsize(), queue_len, user_id))
                 for fan in user_cache[str(user_id)]:
                     temp_user_ids.put(fan['fan_id'])
-                visited_user_cache[user_id] = user_cache[str(user_id)]
+                visited_users.append(user_id)
                 fans_info.append({'user_id': user_id, 'fans_info': user_cache[str(user_id)]})
             else:
                 since_id = 0
@@ -112,10 +135,15 @@ while search_depth <= 5:
                         break
                     else:
                         since_id += 20
-                visited_user_cache[user_id] = fans_list
+
+                last_data[user_id] = fans_list
+                if len(last_data) > item_num:
+                    cache_files.append('../data/cache/fans_user_cache{:0>3d}.json'.format(len(cache_files)))
+                    last_data = {}
+                    last_data[user_id] = fans_list
                 fans_info.append({'user_id': user_id, 'fans_info': fans_list})
                 # 缓存已经获取到的所有用户信息
-                with open('../data/fan_user_cahce.json', 'w') as cache_f:
-                    json.dump(visited_user_cache, cache_f)
+                with open('../data/cache/fans_user_cache{:0>3d}.json'.format(len(cache_files)-1), 'w') as cache_f:
+                    json.dump(last_data, cache_f)
 
 # https://m.weibo.cn/api/container/getIndex?containerid=231051_-_followers_-_3479691367&page=2
