@@ -24,6 +24,7 @@ def get_file_list(root_dir):
 
 def read_json_files(files):
     data = {}
+    temp_data = {}
     for file in files:
         with open(file, 'r') as f:
             temp_data = json.load(f)
@@ -55,7 +56,7 @@ def spider_fans(user_id, since_id):
     data, success_flag = repeat_request(url)
 
     # 返回数据为空时，repeat
-    wait_time = 0.5859375
+    wait_time = 0.5
     while not success_flag:
         print("Request Failed!!!\tWait {}s".format(wait_time))
         time.sleep(wait_time)
@@ -118,8 +119,7 @@ if __name__ == '__main__':
                     print('{}/{}:\t{} in cache'.format(queue_len - user_ids.qsize(), queue_len, user_id))
                     for fan in user_cache[str(user_id)]:
                         temp_user_ids.put(fan['fan_id'])
-                    visited_users.append(user_id)
-                    fans_info.append({'user_id': user_id, 'relatives_info': user_cache[str(user_id)]})
+                    fans_info.append({'user_id': user_id, 'fans_info': user_cache[str(user_id)]})
                 else:
                     since_id = 0
                     fans_list = []
@@ -140,9 +140,10 @@ if __name__ == '__main__':
                         cache_files.append('../data/cache/fans/fans_user_cache{:0>3d}.json'.format(len(cache_files)))
                         last_data = {}
                         last_data[user_id] = fans_list
-                    fans_info.append({'user_id': user_id, 'relatives_info': fans_list})
+                    fans_info.append({'user_id': user_id, 'fans_info': fans_list})
                     # 缓存已经获取到的所有用户信息
                     with open('../data/cache/fans/fans_user_cache{:0>3d}.json'.format(len(cache_files)-1), 'w') as cache_f:
                         json.dump(last_data, cache_f)
+                visited_users.append(user_id)
 
     # https://m.weibo.cn/api/container/getIndex?containerid=231051_-_followers_-_3479691367&page=2
