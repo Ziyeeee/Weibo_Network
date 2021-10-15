@@ -10,7 +10,11 @@ from util.spider_fans import get_file_list, read_json_files, item_num
 
 
 def repeat_request(url):
-    response = requests.request("GET", url)
+    try:
+        response = requests.request("GET", url)
+    except:
+        time.sleep(5)
+        response = requests.request("GET", url)
     data = response.content
     data = json.loads(data)
     if data['ok'] == 0:

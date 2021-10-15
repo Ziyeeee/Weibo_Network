@@ -33,7 +33,11 @@ def read_json_files(files):
 
 
 def repeat_request(url):
-    response = requests.request("GET", url)
+    try:
+        response = requests.request("GET", url)
+    except:
+        time.sleep(5)
+        response = requests.request("GET", url)
     data = response.content
     data = json.loads(data)
     if data['ok'] == 0:
