@@ -14,32 +14,32 @@
           <el-button v-else @click="exitFullScreen" @keyup.space="exitFullScreen"><i class="el-icon-full-screen"></i> 退出全屏</el-button>
         </el-col>
         <el-col :span="12">
-          <el-autocomplete
-              class="inline-input"
-              v-model="searchInput"
-              :fetch-suggestions="searchAutoComplete"
-              placeholder="搜索"
-              @select="handleSelect"
-          >
-            <el-button slot="append" icon="el-icon-search" @click="findSubGraph"  ></el-button>
-          </el-autocomplete>
+<!--          <el-autocomplete-->
+<!--              class="inline-input"-->
+<!--              v-model="searchInput"-->
+<!--              :fetch-suggestions="searchAutoComplete"-->
+<!--              placeholder="搜索"-->
+<!--              @select="handleSelect"-->
+<!--          >-->
+<!--            <el-button slot="append" icon="el-icon-search" @click="findSubGraph"  ></el-button>-->
+<!--          </el-autocomplete>-->
 <!--          <el-input v-model="searchInput" clearable placeholder="搜索" @keydown.enter.native="findSubGraph">-->
 <!--            <el-button slot="append" icon="el-icon-search" @click="findSubGraph"></el-button>-->
 <!--          </el-input>-->
         </el-col>
       </el-row>
     </div>
-    <el-dialog :title="cardTitle" :visible.sync="dialogCardVisible" :append-to-body="true">
-      <el-card class="box-card" shadow="never">
-        <div v-for="item in cardItems" :key="item" class="text item">
-          <el-card shadow="hover">
-            <el-link type="primary" align="left" @click="clickCardText(item.label)" >{{item.label}}</el-link>
-            <el-divider><i class="el-icon-s-management"></i></el-divider>
-            <el-col align="left">原文参考：{{item.reference}}<br /><br /></el-col>
-          </el-card>
-        </div>
-      </el-card>
-    </el-dialog>
+<!--    <el-dialog :title="cardTitle" :visible.sync="dialogCardVisible" :append-to-body="true">-->
+<!--      <el-card class="box-card" shadow="never">-->
+<!--        <div v-for="item in cardItems" :key="item" class="text item">-->
+<!--          <el-card shadow="hover">-->
+<!--            <el-link type="primary" align="left" @click="clickCardText(item.label)" >{{item.label}}</el-link>-->
+<!--            <el-divider><i class="el-icon-s-management"></i></el-divider>-->
+<!--            <el-col align="left">原文参考：{{item.reference}}<br /><br /></el-col>-->
+<!--          </el-card>-->
+<!--        </div>-->
+<!--      </el-card>-->
+<!--    </el-dialog>-->
     <EditNodeBox id="EditNodeBox" :nodeText="this.selectedNode.label" :nodeRef="this.selectedNode.reference" :dialogVisible="this.isVisible"  msg="This is a Box"  @EditNodeInfo="EditNode"></EditNodeBox>
   </div>
 </template>
