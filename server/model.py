@@ -354,29 +354,3 @@ def findInterdependentNode(word):
         return res
     except:
         return []
-
-
-# model = KeyedVectors.load_word2vec_format('./DeepWalkModel/deepwalkModel', binary=False, encoding="utf8")
-
-# graph = connectNeo4j()
-# data = loadDataFromNeo4j(graph)
-# md2json('graph.md', 'data.json')
-
-# with open('./templates/data.json', 'r') as f:
-#     data = json.load(f)
-
-# json2neo(data, graph)
-
-# autoComplete(graph, '关联规则挖掘')
-
-# userDict = []
-#     inniAdjMatrix(data)
-#     for node in data['nodes']:
-#         if node['groupId'] == 4 or (node['groupId'] != 3 and len(node['label']) < 7):
-#             cnt = 1
-#             for key in adjMatrix.keys():
-#                 if adjMatrix[key][node['index']]:
-#                     cnt += 1
-#             userDict.append(node['label'] + ' ' + str(cnt) + ' nz\n')
-#     with open('user_dict.txt', 'w', encoding='utf-8') as f:
-#         f.writelines(userDict)

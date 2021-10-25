@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <!-- <GraphVue></GraphVue>-->
     <el-container direction="vertical">
       <Header msg="基 于 微 博 的 社 交 网 络 可 视 化 系 统"></Header>
       <el-container>

@@ -4,10 +4,6 @@ import time
 from queue import Queue
 from util.spider_fans import get_file_list, read_json_files, item_num
 
-"""
-    网址：https://m.weibo.cn/profile/3479691367
-"""
-
 
 def repeat_request(url):
     try:
@@ -66,7 +62,8 @@ if __name__ == '__main__':
     temp_user_ids = Queue()
     followers_info = []
     visited_user = []
-    user_ids.put(3479691367)
+    # 填入起始节点的id
+    user_ids.put(1234567890)
     queue_len = user_ids.qsize()
     search_depth = 0
 

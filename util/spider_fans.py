@@ -6,13 +6,6 @@ from queue import Queue
 from util.divide_cache import item_num
 
 
-"""
-    网址：https://m.weibo.cn/profile/3479691367
-    待完成：
-        1.爬取关注的人
-"""
-
-
 def get_file_list(root_dir):
     json_files = []
     for root, dirs, files in os.walk(root_dir):
@@ -93,7 +86,8 @@ if __name__ == '__main__':
     temp_user_ids = Queue()
     fans_info = []
     visited_users = []
-    user_ids.put(3479691367)
+    # 填入起始节点的id
+    user_ids.put(1234567890)
     queue_len = user_ids.qsize()
     search_depth = 0
 
@@ -150,4 +144,3 @@ if __name__ == '__main__':
                         json.dump(last_data, cache_f)
                 visited_users.append(user_id)
 
-    # https://m.weibo.cn/api/container/getIndex?containerid=231051_-_followers_-_3479691367&page=2

@@ -14,7 +14,8 @@ if __name__ == '__main__':
     visited_users = []
     fans_list = []
     followers_list = []
-    user_ids.put(3479691367)
+    # 填入起始节点的id
+    user_ids.put(1234567890)
     queue_len = user_ids.qsize()
     search_depth = 0
 

@@ -14,32 +14,9 @@
           <el-button v-else @click="exitFullScreen" @keyup.space="exitFullScreen"><i class="el-icon-full-screen"></i> 退出全屏</el-button>
         </el-col>
         <el-col :span="12">
-<!--          <el-autocomplete-->
-<!--              class="inline-input"-->
-<!--              v-model="searchInput"-->
-<!--              :fetch-suggestions="searchAutoComplete"-->
-<!--              placeholder="搜索"-->
-<!--              @select="handleSelect"-->
-<!--          >-->
-<!--            <el-button slot="append" icon="el-icon-search" @click="findSubGraph"  ></el-button>-->
-<!--          </el-autocomplete>-->
-<!--          <el-input v-model="searchInput" clearable placeholder="搜索" @keydown.enter.native="findSubGraph">-->
-<!--            <el-button slot="append" icon="el-icon-search" @click="findSubGraph"></el-button>-->
-<!--          </el-input>-->
         </el-col>
       </el-row>
     </div>
-<!--    <el-dialog :title="cardTitle" :visible.sync="dialogCardVisible" :append-to-body="true">-->
-<!--      <el-card class="box-card" shadow="never">-->
-<!--        <div v-for="item in cardItems" :key="item" class="text item">-->
-<!--          <el-card shadow="hover">-->
-<!--            <el-link type="primary" align="left" @click="clickCardText(item.label)" >{{item.label}}</el-link>-->
-<!--            <el-divider><i class="el-icon-s-management"></i></el-divider>-->
-<!--            <el-col align="left">原文参考：{{item.reference}}<br /><br /></el-col>-->
-<!--          </el-card>-->
-<!--        </div>-->
-<!--      </el-card>-->
-<!--    </el-dialog>-->
     <EditNodeBox id="EditNodeBox" :nodeText="this.selectedNode.label" :nodeRef="this.selectedNode.reference" :dialogVisible="this.isVisible"  msg="This is a Box"  @EditNodeInfo="EditNode"></EditNodeBox>
   </div>
 </template>
@@ -48,16 +25,6 @@
 import * as d3 from 'd3';
 import EditNodeBox from "@/components/EditNodeBox";
 
-// var nodes = [{index: 0, label: 'Node 1', groupId: 0},
-//   {index: 1, label: 'Node 2', groupId: 1},
-//   {index: 2, label: 'Node 3', groupId: 2},
-//   {index: 3, label: 'Node 4', groupId: 3},
-//   {index: 4, label: 'Node 5', groupId: 4}];
-// var edges = [{source: 0, target: 2},
-//   {source: 0, target: 1},
-//   {source: 1, target: 3},
-//   {source: 1, target: 3},
-//   {source: 1, target: 4}];
 
 const colorList = [
   '#FCFE8B',
@@ -94,7 +61,6 @@ export default {
       indexNew2Old: [],
 
       data: {},
-      // data: {nodes: nodes, links: edges},
       node: undefined,
       link: undefined,
       arrow: undefined,
@@ -356,55 +322,6 @@ export default {
           })
     },
 
-    findSubGraph(){
-      const url = "http://127.0.0.1:5000/api/get_search";
-      this.axios.get(url, {params: {search: this.searchInput, numLayer: 3, isRecommend: this.isRecommendQuery}})
-          .then((res) => {
-            console.log(res.data);
-            if(res.data == false) {
-              this.$message({
-                message: '未找到相关信息',
-                type: 'warning'
-              });
-            }
-            else {
-              this.data = res.data.subgraph;
-              this.indexNew2Old = res.data.new2old;
-              this.updateGraph();
-              if (this.isInList(this.searchInput, this.autoCompleteList)){
-                this.dialogCardVisible = true
-                this.cardTitle = this.searchInput
-                this.cardItems = this.data.nodes.slice(1)
-              }
-            }
-          })
-          .catch((error) =>{
-            console.log(error)
-          })
-    },
-
-    searchAutoComplete(queryString, cb){
-      // console.log(queryString)
-
-      if (!this.isInList(queryString, this.autoCompleteList)){
-        this.isRecommendQuery = false
-        const url = "http://127.0.0.1:5000/api/get_autoComplete";
-        this.axios.get(url, {params: {search: this.searchInput}})
-            .then((res) => {
-              // console.log(res.data);
-              // this.data = res.data;
-              this.autoCompleteList = res.data;
-              cb(res.data);
-            })
-            .catch((error) =>{
-              console.log(error);
-            })
-      }
-      else {
-        cb([]);
-      }
-    },
-
     handleSelect() {
       this.isRecommendQuery = true;
     },
@@ -416,30 +333,6 @@ export default {
         }
       }
       return false;
-    },
-
-    clickCardText(text){
-      this.searchInput = text;
-      const url = "http://127.0.0.1:5000/api/get_search";
-      this.axios.get(url, {params: {search: text, numLayer: 3, isRecommend: false}})
-          .then((res) => {
-            console.log(res.data);
-            if(res.data == false) {
-              this.$message({
-                message: '未找到相关信息',
-                type: 'warning'
-              });
-            }
-            else {
-              this.data = res.data.subgraph;
-              this.indexNew2Old = res.data.new2old;
-              this.updateGraph();
-            }
-          })
-          .catch((error) =>{
-            console.log(error)
-          })
-      this.dialogCardVisible = false;
     },
 
     showMainGraph(){
@@ -475,9 +368,6 @@ export default {
       if(this.mouseIsSelect){
         this.isShowDrawer = true;
       }
-    },
-    closeDrawer(){
-      this.isShowDrawer = false;
     },
 
     // 节点绘制相关
@@ -621,32 +511,6 @@ export default {
       this.cursor.attr("cx", this.cursorNode.x)
           .attr("cy", this.cursorNode.y);
 
-      // ++this.tickCount;
-      // let earlyStop = true;
-      // if (Math.abs(this.data.nodes[0].vx) < 0.1 && Math.abs(this.data.nodes[0].vy) < 0.1){
-      //   for (let i=1, len=this.data.nodes.length; i<len; i++){
-      //     if (Math.abs(this.data.nodes[i].vx) >= 0.1 || Math.abs(this.data.nodes[i].vy) >= 0.1){
-      //       earlyStop = false;
-      //       break;
-      //     }
-      //   }
-      //   if (earlyStop == true){
-      //     this.simulation.stop();
-      //     console.log(this.tickCount);
-      //     console.timeEnd(2)
-      //   }
-      // }
-      //
-      // if(this.tickCount == 1){
-      //   console.time(1)
-      //   console.time(2)
-      // }
-      // else if(this.tickCount == 10){
-      //   console.timeEnd(1)
-      // }
-      // else if(this.tickCount == 300){
-      //   console.timeEnd(2)
-      // }
     },
     linkArc(d){
       if(this.linkNotExist(d.source.index, d.target.index) || this.linkNotExist(d.target.index, d.source.index)) {

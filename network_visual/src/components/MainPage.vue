@@ -16,14 +16,6 @@ export default {
     GraphD3
   },
   methods:{
-    // zoomOut: function (){
-    //   console.log('zoomOut')
-    //   GraphVue.methods.myZoomOut()
-    // },
-    // zoomIn: function (){
-    //   console.log('zoomIn')
-    //   // setZoom('zoomIn')
-    // }
   }
 }
 </script>

@@ -132,7 +132,7 @@ def generateHTML():
     with open("chap18_marked.html", "wb") as file:
         file.write(html)
 
-# print(matchSpans(soup, '单维关联规则若关联规则中的项或属性只涉及一个维，则称它为单维关联规则。单维关联规则展示了同一个属性或维内的联系。'))
+
 
 
 def generateTestData(numNodes, numLinks):
