@@ -67,8 +67,51 @@ def loadDataFromNeo4j(graph):
 
 
 def loadDataFromJson(fileName):
-    with open(fileName, 'r') as f:
-        return json.load(f)
+    node_index_dict = {}
+    node_name_dict = {3479691367: '周邹揪'}
+    data = {'nodes': [], 'links': []}
+    i = 0
+    for depth in range(0, 2):
+        with open('../data/relatives-depth{}.json'.format(depth), 'r') as f:
+            user_info = json.load(f)
+            for info in user_info:
+                user_id = int(info['user_id'])
+                if user_id not in node_index_dict:
+                    node_index_dict[user_id] = i
+                    if user_id == 3479691367:
+                        group = 1
+                    # data['nodes'].append({'index': i, 'id': user_id, 'label': node_name_dict[user_id], 'groupId': group})
+                    data['nodes'].append(
+                        {'index': i, 'id': user_id, 'label': '', 'groupId': group})
+                    i += 1
+                for fan in info['fans_info']:
+                    fan_id = int(fan['fan_id'])
+                    if fan_id not in node_index_dict:
+                        node_index_dict[fan_id] = i
+                        if fan['fan_gender'] == 'f':
+                            group = 1
+                        else:
+                            group = 2
+                        # data['nodes'].append({'index': i, 'id': fan_id, 'label': fan['fan_name'], 'groupId': group})
+                        data['nodes'].append({'index': i, 'id': fan_id, 'label': '', 'groupId': group})
+                        node_name_dict[fan_id] = fan['fan_name']
+                        data['links'].append({'source': node_index_dict[user_id], 'target': node_index_dict[fan_id]})
+                        i += 1
+                for follower in info['followers_info']:
+                    follower_id = int(follower['follower_id'])
+                    if follower_id not in node_index_dict:
+                        node_index_dict[follower_id] = i
+                        if follower['follower_gender'] == 'f':
+                            group = 1
+                        else:
+                            group = 2
+                        # data['nodes'].append({'index': i, 'id': follower_id, 'label': follower['follower_name'], 'groupId': group})
+                        data['nodes'].append(
+                            {'index': i, 'id': follower_id, 'label': '', 'groupId': group})
+                        node_name_dict[follower_id] = follower['follower_name']
+                        data['links'].append({'source': node_index_dict[follower_id], 'target': node_index_dict[user_id]})
+                        i += 1
+    return data
 
 
 def calculateOutDegree(index, data):
@@ -313,7 +356,7 @@ def findInterdependentNode(word):
         return []
 
 
-model = KeyedVectors.load_word2vec_format('./DeepWalkModel/deepwalkModel', binary=False, encoding="utf8")
+# model = KeyedVectors.load_word2vec_format('./DeepWalkModel/deepwalkModel', binary=False, encoding="utf8")
 
 # graph = connectNeo4j()
 # data = loadDataFromNeo4j(graph)

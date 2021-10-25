@@ -3,46 +3,46 @@
     <el-menu
         class="el-menu-vertical-demo"
         @select="handleSelect">
-      <el-submenu index="0">
-        <template slot="title">
-          <i class="el-icon-plus"></i>
-          <span>添加节点</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="0-0">
-            <i class="el-icon-eleme"></i>
-            <span>任务节点</span>
-          </el-menu-item>
-          <el-menu-item index="0-1">
-            <i class="el-icon-eleme"></i>
-            <span>方法节点</span>
-          </el-menu-item>
-          <el-menu-item index="0-2">
-            <i class="el-icon-eleme"></i>
-            <span>步骤节点</span>
-          </el-menu-item>
-          <el-menu-item index="0-3">
-            <i class="el-icon-eleme"></i>
-            <span>属性节点</span>
-          </el-menu-item>
-          <el-menu-item index="0-4">
-            <i class="el-icon-eleme"></i>
-            <span>概念节点</span>
-          </el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
-      <el-menu-item class="el-submenu" index="1">
-        <i class="el-icon-plus"></i>
-        <span slot="title">添加关系</span>
-      </el-menu-item>
+<!--      <el-submenu index="0">-->
+<!--        <template slot="title">-->
+<!--          <i class="el-icon-plus"></i>-->
+<!--          <span>添加节点</span>-->
+<!--        </template>-->
+<!--        <el-menu-item-group>-->
+<!--          <el-menu-item index="0-0">-->
+<!--            <i class="el-icon-eleme"></i>-->
+<!--            <span>任务节点</span>-->
+<!--          </el-menu-item>-->
+<!--          <el-menu-item index="0-1">-->
+<!--            <i class="el-icon-eleme"></i>-->
+<!--            <span>方法节点</span>-->
+<!--          </el-menu-item>-->
+<!--          <el-menu-item index="0-2">-->
+<!--            <i class="el-icon-eleme"></i>-->
+<!--            <span>步骤节点</span>-->
+<!--          </el-menu-item>-->
+<!--          <el-menu-item index="0-3">-->
+<!--            <i class="el-icon-eleme"></i>-->
+<!--            <span>属性节点</span>-->
+<!--          </el-menu-item>-->
+<!--          <el-menu-item index="0-4">-->
+<!--            <i class="el-icon-eleme"></i>-->
+<!--            <span>概念节点</span>-->
+<!--          </el-menu-item>-->
+<!--        </el-menu-item-group>-->
+<!--      </el-submenu>-->
+<!--      <el-menu-item class="el-submenu" index="1">-->
+<!--        <i class="el-icon-plus"></i>-->
+<!--        <span slot="title">添加关系</span>-->
+<!--      </el-menu-item>-->
       <el-menu-item class="el-submenu" index="2">
         <i class="el-icon-delete"></i>
         <span slot="title">删除节点</span>
       </el-menu-item>
-      <el-menu-item class="el-submenu" index="3">
-        <i class="el-icon-delete-solid"></i>
-        <span slot="title">删除关系</span>
-      </el-menu-item>
+<!--      <el-menu-item class="el-submenu" index="3">-->
+<!--        <i class="el-icon-delete-solid"></i>-->
+<!--        <span slot="title">删除关系</span>-->
+<!--      </el-menu-item>-->
       <el-menu-item class="el-submenu" index="4">
         <i class="el-icon-more-outline"></i>
         <span slot="title">局部展示</span>
@@ -59,10 +59,10 @@
         <i class="el-icon-edit"></i>
         <span slot="title">查看与编辑</span>
       </el-menu-item>
-      <el-menu-item class="el-submenu" index="8">
-        <i class="el-icon-data-analysis"></i>
-        <span slot="title">Demo</span>
-      </el-menu-item>
+<!--      <el-menu-item class="el-submenu" index="8">-->
+<!--        <i class="el-icon-data-analysis"></i>-->
+<!--        <span slot="title">Demo</span>-->
+<!--      </el-menu-item>-->
     </el-menu>
   </el-aside>
 </template>

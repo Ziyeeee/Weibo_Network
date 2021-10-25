@@ -5,7 +5,7 @@ from app import databaseMode
 from model import *
 
 if databaseMode:
-    from app import graph
+    from server.app import graph
 
 data = {}
 
@@ -19,9 +19,9 @@ def get_data():
         # print(request.json)
         data = loadDataFromJson('./templates/data.json')
         # data = loadDataFromJson('./testData/500-500.json')
-    inniAdjMatrix(data)
+    # inniAdjMatrix(data)
 
-    data = {'nodes': [], 'links': []}
+    # data = {'nodes': [], 'links': []}
     return jsonify(data)
 
 

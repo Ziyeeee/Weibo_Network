@@ -160,7 +160,7 @@ export default {
                 .on("click", this.clicked);
 
             this.simulation = d3.forceSimulation(this.data.nodes)
-                .force("charge", d3.forceManyBody().strength(-2000))
+                .force("charge", d3.forceManyBody().strength(-500))
                 .force("link", d3.forceLink(this.data.links).distance(radius * 5))
                 .force('collide', d3.forceCollide().radius(radius))
                 .force("x", d3.forceX())
@@ -714,7 +714,7 @@ export default {
         event.subject.fy = null;
 
         if (self.$store.state.clickPath && self.$store.state.clickPath[0] === "1"){
-          self.simulation.force("charge", d3.forceManyBody().strength(-2000))
+          self.simulation.force("charge", d3.forceManyBody().strength(-500))
               .force("link", d3.forceLink(self.data.links).distance(radius * 5))
               .force("x", d3.forceX())
               .force("y", d3.forceY());

@@ -42,7 +42,7 @@ def build_graph(depth):
                 if not G.has_node(follower_id):
                     G.add_node(follower_id, name=follower['follower_name'])
                 G.add_edge(follower_id, user_id)
-    return G, set(interior_nodes_id), set(outer_nodes_id)
+    return data
 
 
 def draw_distribution(cnt_list, cut_num, x_label='', y_label='', title='', log=False):
